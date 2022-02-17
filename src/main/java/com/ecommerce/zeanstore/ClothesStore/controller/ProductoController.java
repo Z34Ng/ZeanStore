@@ -64,9 +64,9 @@ public class ProductoController{
         return "redirect:/productos/showAll";
     }
     
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable int id){ //la variable que pasa por url pasa como parametro del metodo         
-        productoService.delete(id);        
-        return "redirect:/productos";
+        productoService.delete(id);         
+        return "redirect:/productos/showAll";
     }
 }
