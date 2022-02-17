@@ -4,18 +4,52 @@
  */
 package com.ecommerce.zeanstore.ClothesStore.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author ZEAN
  */
-public class Orden {
+@Entity
+@Table(name="orden")
+public class Orden implements Serializable {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int  id;
     private String number;
     private LocalDate createDate;
     private LocalDate reciedDate;
-    private double total;
+    private double amount;
+    
+    @ManyToOne
+    private Usuario user;
+    
+    @OneToOne(mappedBy="orden")
+    private DetalleOrden detalle;    
+
+    public Usuario getUsuario() {
+        return user;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.user = usuario;
+    }
+
+    public DetalleOrden getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(DetalleOrden detalle) {
+        this.detalle = detalle;
+    }
 
     public Orden() {
     }
@@ -25,7 +59,7 @@ public class Orden {
         this.number = number;
         this.createDate = createDate;
         this.reciedDate = reciedDate;
-        this.total = total;
+        this.amount = total;
     }
 
     public int getId() {
@@ -61,11 +95,11 @@ public class Orden {
     }
 
     public double getTotal() {
-        return total;
+        return amount;
     }
 
     public void setTotal(double total) {
-        this.total = total;
+        this.amount = total;
     }
     
 }

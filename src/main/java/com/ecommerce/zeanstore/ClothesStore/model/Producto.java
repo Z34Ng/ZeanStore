@@ -4,78 +4,48 @@
  */
 package com.ecommerce.zeanstore.ClothesStore.model;
 
+import java.io.Serializable;
+import java.util.logging.Logger;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.Data;
+
 /**
  *
  * @author ZEAN
  */
-public class Producto {
+@Entity
+@Data
+@Table(name="producto")
+public class Producto implements Serializable {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;
     private String picture;
-    private double prize;
-    private int cantidad;
+    private double price;
+    private int amount;
+    
+    @ManyToOne
+    private Usuario user;
 
     public Producto() {
     }
 
-    public Producto(int id, String name, String description, String picture, double prize, int cantidad) {
+    public Producto(int id, String name, String description, String picture, double price, int amount, Usuario user) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.picture = picture;
-        this.prize = prize;
-        this.cantidad = cantidad;
+        this.price = price;
+        this.amount = amount;
+        this.user = user;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public double getPrize() {
-        return prize;
-    }
-
-    public void setPrize(double prize) {
-        this.prize = prize;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-    
     
     
 }

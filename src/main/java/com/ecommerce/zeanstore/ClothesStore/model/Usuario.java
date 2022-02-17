@@ -4,19 +4,71 @@
  */
 package com.ecommerce.zeanstore.ClothesStore.model;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  *
  * @author ZEAN
  */
-public class Usuario {
+
+@Entity
+@Table(name="usuario")
+public class Usuario implements Serializable {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
+    
+    //@Column(name="name")
     private String name;
+    
+    //@Column(name="username")
     private String username;
+    
+    //@Column(name="email")
     private String email;
+    
+    //@Column(name="address")
     private String address;
+    
+    //@Column(name="phone")
     private String phone;
+    
+    //@Column(name="tipo")
     private String tipo;
+    
+    //@Column(name="password")
     private String password;
+    
+    @OneToMany(mappedBy="user")
+    private List<Producto> productos; 
+    
+    @OneToMany(mappedBy="user")
+    private List<Orden> ordenes;
+
+    public List<Orden> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
 
     public Usuario(int id, String name, String username, String email, String address, String phone, String tipo, String password) {
         this.id = id;
