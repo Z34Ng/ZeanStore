@@ -2,13 +2,13 @@
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org">
 
-    <head th:replace="administrador/template_admin.html :: head">
+    <head th:replace="usuario/template_user.html :: head">
         <title>Inicio</title>
     </head>
 
     <body>
         <!-- Navigation -->
-        <header th:include="administrador/template_admin.html :: header"></header>
+        <header th:include="usuario/template_user.html :: header"></header>
         <!-- Page Content -->
         <div class="container">
             <!-- Jumbotron Header -->
@@ -33,6 +33,6 @@
             <!-- /.row -->
 
         </div>
-        <footer th:replace="administrador/template_admin.html :: footer"></footer>
+        <footer th:replace="usuario/template_user.html"></footer>
     </body>
 </html>
