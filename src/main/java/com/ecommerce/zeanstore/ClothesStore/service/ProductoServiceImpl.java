@@ -6,6 +6,7 @@ package com.ecommerce.zeanstore.ClothesStore.service;
 
 import com.ecommerce.zeanstore.ClothesStore.model.Producto;
 import com.ecommerce.zeanstore.ClothesStore.repository.ProductoRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,11 @@ public class ProductoServiceImpl implements ProductoService{
     @Override
     public void delete(Integer id) {
         productoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Producto> findAll() {
+        return productoRepository.findAll();
     }
     
 }

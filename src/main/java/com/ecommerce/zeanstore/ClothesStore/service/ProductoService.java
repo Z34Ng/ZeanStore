@@ -5,6 +5,7 @@
 package com.ecommerce.zeanstore.ClothesStore.service;
 
 import com.ecommerce.zeanstore.ClothesStore.model.Producto;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,4 +17,5 @@ public interface ProductoService {
     public Optional<Producto> get(Integer  id);  //Optional pq puede existir o no
     public void update(Producto producto);
     public void delete(Integer  id);
+    public List<Producto> findAll();
 }
