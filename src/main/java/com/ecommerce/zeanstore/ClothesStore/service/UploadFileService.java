@@ -23,11 +23,13 @@ public class UploadFileService {
     
     public String saveImage(MultipartFile file) throws IOException{
         if(!file.isEmpty()){
-            byte[] bytes=file.getBytes();
+            byte[] bytes=file.getBytes(); //se convierte a bytes para realizar el envio
+                        
+            Path path=Paths.get(folder+file.getOriginalFilename());//establezco 
+            //la ruta (URI) donde se guardara la imagen
             
-            Path path=Paths.get(folder+file.getOriginalFilename());
             Files.write(path,bytes);
-            return file.getOriginalFilename();
+            return file.getOriginalFilename(); //Retorna el nombre de la imagen subida            
         }
         
         return "default.jpg";

@@ -5,7 +5,6 @@
 package com.ecommerce.zeanstore.ClothesStore.model;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +23,7 @@ import lombok.Data;
 public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private String picture;
@@ -37,7 +36,7 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(int id, String name, String description, String picture, double price, int amount, Usuario user) {
+    public Producto(Integer id, String name, String description, String picture, double price, int amount, Usuario user) {
         this.id = id;
         this.name = name;
         this.description = description;

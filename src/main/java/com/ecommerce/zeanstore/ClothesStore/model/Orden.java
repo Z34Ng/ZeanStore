@@ -33,7 +33,7 @@ public class Orden implements Serializable {
     private Usuario user;
     
     @OneToOne(mappedBy="orden")
-    private DetalleOrden detalle;    
+    private DetalleOrden detalle;
 
     public Usuario getUsuario() {
         return user;
