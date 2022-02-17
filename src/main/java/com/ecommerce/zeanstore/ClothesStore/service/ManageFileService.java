@@ -17,14 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ZEAN
  */
 @Service
-public class UploadFileService {
-    private String folder="images//";
-    
+public class ManageFileService {
+    private final String folder="images//";    
     
     public String saveImage(MultipartFile file) throws IOException{
         if(!file.isEmpty()){
             byte[] bytes=file.getBytes(); //se convierte a bytes para realizar el envio
-                        
+            
             Path path=Paths.get(folder+file.getOriginalFilename());//establezco 
             //la ruta (URI) donde se guardara la imagen
             
@@ -35,9 +34,8 @@ public class UploadFileService {
         return "default.jpg";
     }
     
-    public void deleteImage(String nombre){
-        String ruta="images//";
-        File file=new File(ruta+nombre);
+    public void deleteImage(String nombre){        
+        File file=new File(folder+nombre);
         file.delete();
     }
 }

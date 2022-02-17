@@ -7,7 +7,7 @@ package com.ecommerce.zeanstore.ClothesStore.controller;
 import com.ecommerce.zeanstore.ClothesStore.model.Producto;
 import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
 import com.ecommerce.zeanstore.ClothesStore.service.ProductoService;
-import com.ecommerce.zeanstore.ClothesStore.service.UploadFileService;
+import com.ecommerce.zeanstore.ClothesStore.service.ManageFileService;
 import java.io.IOException;
 import java.util.Optional;
 import org.slf4j.*;
@@ -28,14 +28,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/productos")
 public class ProductoController {
-
     private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
 
     @Autowired
     private ProductoService productoService;
 
     @Autowired //inyecctión
-    private UploadFileService upload; //servicio creado para subir imagen
+    private ManageFileService upload; //servicio creado para subir imagen
 
     @GetMapping("/showAll")
     public String showAll(Model model) {
@@ -52,24 +51,11 @@ public class ProductoController {
     public String saveProduct(Producto producto, @RequestParam("img") MultipartFile file) throws IOException { //obtiene el param del atributo img de la vista
         //LOGGER.info("Prueba con logger si guarda esta webaad",producto.toString());        
         producto.setUser(new Usuario(1, "", "", "", "", "", "", ""));
-
         //imagen
-        if (producto.getId()==null) { //cuando se crea un producto
-            String nombreImagen = upload.saveImage(file);
-            producto.setPicture(nombreImagen);
-        } else {
-            if (file.isEmpty()) { //editamos el producto pero no cambiamos la img
-                Producto p = productoService.get(producto.getId()).get();
-                producto.setPicture(p.getPicture());
-            }
-            else {
-                String nombreImagen = upload.saveImage(file);
-                producto.setPicture(nombreImagen);
-            }
-        }
+        if (producto.getId() == null) //cuando se crea un producto                    
+            producto.setPicture(upload.saveImage(file));        
 
         productoService.save(producto);
-
         return "redirect:/productos/showAll";
     }
 
@@ -83,13 +69,30 @@ public class ProductoController {
     }
 
     @PostMapping("/update")
-    public String updateProduct(Producto producto) {
+    public String updateProduct(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
+        Producto p = productoService.get(producto.getId()).get();
+        
+        if (file.isEmpty()) //editamos el producto pero no cambiamos la img            
+            producto.setPicture(p.getPicture());
+        else { //cuando se edita la img      
+            if (!p.getPicture().equals("default.jpg"))
+                upload.deleteImage(p.getPicture());
+            String nombreImagen = upload.saveImage(file);
+            producto.setPicture(nombreImagen);
+        }
+        producto.setUser(p.getUser());
         productoService.update(producto);
         return "redirect:/productos/showAll";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable int id) { //la variable que pasa por url pasa como parametro del metodo         
+
+        Producto p = productoService.get(id).get();
+        //elimina cuando no es la img por defecto
+        if (!p.getPicture().equals("default.jpg"))
+            upload.deleteImage(p.getPicture());
+        
         productoService.delete(id);
         return "redirect:/productos/showAll";
     }

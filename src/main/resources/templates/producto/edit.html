@@ -30,25 +30,25 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="descripcion">Descripción:</label>
                         <div class="col-sm-10">          
-                            <textarea class="form-control" id="descripcion" name="description" placeholder="Ingrese la descripcion del producto" autocomplete="off" th:value="${producto.description}"> </textarea>
+                            <textarea class="form-control" id="descripcion" name="description" placeholder="Ingrese la descripcion del producto" autocomplete="off" th:text="${producto.description}"> </textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="cantidad">Cantidad:</label>
                         <div class="col-sm-10">          
-                            <input type="number" class="form-control" id="cantidad" name="amount" placeholder="Ingrese la cantidad del producto" value="" autocomplete="off" th:value="${producto.amount}"/>
+                            <input type="number" class="form-control" id="cantidad" name="amount" placeholder="Ingrese la cantidad del producto" autocomplete="off" th:value="${producto.amount}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="precio">Precio:</label>
                         <div class="col-sm-10">          
-                            <input type="number" class="form-control" step="any"  id="precio" name="price" placeholder="Ingrese el precio del producto" value="" autocomplete="off" th:value="${producto.price}"/>
+                            <input type="number" class="form-control" step="any"  id="precio" name="price" placeholder="Ingrese el precio del producto" autocomplete="off" th:value="${producto.price}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="control-label col-sm-2" for="img">Imagen:</label>
                         <div class="col-sm-10">  
-                            <input type="file" class="form-control-file" id="img" name="img"/>
+                            <input type="file" class="form-control-file" id="img" name="img" th:value="${producto.picture}"/>
                         </div>
                     </div>
                     <div class="row">
