@@ -64,11 +64,47 @@ public class HomeController {
         detalle.setAmount(cantidad);
         detalle.setPrize(producto.getPrice());
         detalle.setTotal(cantidad*producto.getPrice());
-        detallesOrden.add(detalle);
         
-        sumaPrecio=detallesOrden.stream().mapToDouble(dt->dt.getTotal()).sum();
+        //valida que el producto no se añada dos veces
+        int idProducto=producto.getId();
+        boolean ingresado=detallesOrden.stream().anyMatch(p -> p.getProducto().getId()==idProducto);        
+        if(!ingresado)
+            detallesOrden.add(detalle); 
+        
+        
+        sumaPrecio=detallesOrden.stream().mapToDouble(dt->dt.getTotal()).sum(); // streams java 8
         orden.setAmount(sumaPrecio);
         
+        model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
+        model.addAttribute("orden",orden);
+        
+        return "usuario/carrito";
+    }   
+    /*
+       (Se puede agregar un id global y asignarlo al detalle.id cuando se crea)
+    */
+    @GetMapping("/quitarProducto/{id}") //retorna el id del producto, no del detalle
+    public String quitarProducto(@PathVariable int id, Model model){        
+        //detallesOrden.removeIf(dt->dt.getName().equals(productoService.get(id).get().getName()));
+        List<DetalleOrden> newOrdenDetalle=new ArrayList<>();
+        
+        for(DetalleOrden detalle:detallesOrden)
+            if(detalle.getProducto().getId()!=id)
+                newOrdenDetalle.add(detalle);
+        
+        detallesOrden=newOrdenDetalle; //cambia la lista 
+        
+        double sumaPrecio=detallesOrden.stream().mapToDouble(dt->dt.getTotal()).sum();
+        orden.setAmount(sumaPrecio);
+        
+        model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
+        model.addAttribute("orden",orden);
+        
+        return "usuario/carrito";
+    }
+    
+    @GetMapping("/getCart")
+    public String getCart( Model model ){
         model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
         model.addAttribute("orden",orden);
         

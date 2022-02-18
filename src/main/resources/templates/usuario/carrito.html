@@ -34,12 +34,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="detalle:${detallesOrden}">
+                                    <tr th:each="detalle:${detallesOrden}">                                        
                                         <td th:text="${detalle.name}"></td>
                                         <td th:text="${detalle.prize}"></td>
                                         <td th:text="${detalle.amount}"></td>
                                         <td th:text="${detalle.total}"></td>
-                                        <td><a th:href="@{/}" class="btn btn-danger">Quitar</a></td>
+                                        <td><a th:href="@{/quitarProducto/{id} (id=${detalle.producto.id})}" class="btn btn-danger">Quitar</a></td>
                                     </tr>
                                 </tbody>
                             </table>
