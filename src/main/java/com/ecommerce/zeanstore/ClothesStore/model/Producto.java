@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
-
 /**
  *
  * @author ZEAN
@@ -28,14 +27,13 @@ public class Producto implements Serializable {
     private String description;
     private String picture;
     private double price;
-    private int amount;
+    private int amount;//inventario
     
     @ManyToOne
     private Usuario user;
 
     public Producto() {
     }
-
     public Producto(Integer id, String name, String description, String picture, double price, int amount, Usuario user) {
         this.id = id;
         this.name = name;
@@ -44,7 +42,5 @@ public class Producto implements Serializable {
         this.price = price;
         this.amount = amount;
         this.user = user;
-    }
-    
-    
+    }        
 }

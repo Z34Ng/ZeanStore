@@ -13,12 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.Data;
 
 /**
  *
  * @author ZEAN
  */
 @Entity
+@Data
 @Table(name="orden")
 public class Orden implements Serializable {
     @Id
@@ -34,72 +36,15 @@ public class Orden implements Serializable {
     
     @OneToOne(mappedBy="orden")
     private DetalleOrden detalle;
-
-    public Usuario getUsuario() {
-        return user;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.user = usuario;
-    }
-
-    public DetalleOrden getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(DetalleOrden detalle) {
-        this.detalle = detalle;
-    }
-
+    
     public Orden() {
     }
 
-    public Orden(int id, String number, LocalDate createDate, LocalDate reciedDate, double total) {
+    public Orden(int id, String number, LocalDate createDate, LocalDate reciedDate, double amount) {
         this.id = id;
         this.number = number;
         this.createDate = createDate;
         this.reciedDate = reciedDate;
-        this.amount = total;
+        this.amount = amount;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public LocalDate getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
-    }
-
-    public LocalDate getReciedDate() {
-        return reciedDate;
-    }
-
-    public void setReciedDate(LocalDate reciedDate) {
-        this.reciedDate = reciedDate;
-    }
-
-    public double getTotal() {
-        return amount;
-    }
-
-    public void setTotal(double total) {
-        this.amount = total;
-    }
-    
 }

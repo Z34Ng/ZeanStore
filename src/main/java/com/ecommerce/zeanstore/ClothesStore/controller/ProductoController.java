@@ -49,7 +49,7 @@ public class ProductoController {
 
     @PostMapping("/save")
     public String saveProduct(Producto producto, @RequestParam("img") MultipartFile file) throws IOException { //obtiene el param del atributo img de la vista
-        //LOGGER.info("Prueba con logger si guarda esta webaad",producto.toString());        
+        //LOGGER.info("Prueba con logger si guarda esta webaad: {}",producto.toString());        
         producto.setUser(new Usuario(1, "", "", "", "", "", "", ""));
         //imagen
         if (producto.getId() == null) //cuando se crea un producto                    
@@ -64,7 +64,7 @@ public class ProductoController {
         Optional<Producto> optionalProducto = productoService.get(id);
         Producto producto = optionalProducto.get();
         model.addAttribute("producto", producto);
-        //LOGGER.info("Resultado del producto buscado",producto.toString());
+        //LOGGER.info("Resultado del producto buscado: {}",producto.toString());
         return "producto/edit";
     }
 
