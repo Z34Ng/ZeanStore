@@ -43,7 +43,7 @@ public class Usuario implements Serializable {
     //@Column(name="password")
     private String password;
     
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user")//atributo de clase Producto
     private List<Producto> productos; 
     
     @OneToMany(mappedBy="user")

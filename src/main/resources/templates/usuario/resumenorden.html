@@ -62,7 +62,7 @@
                             <h2 class="card-title">Resumen Orden</h2>
                             <ul class="list-group">
                                 <li class="list-group-item"><h5 th:text="'Total: '+${orden.amount}"> </h5></li>
-                                <a href="#" class="btn btn-dark">Generar</a>
+                                <a th:href="@{/saveorder}" class="btn btn-dark">Generar</a>
                             </ul>
                         </div>
                     </div>

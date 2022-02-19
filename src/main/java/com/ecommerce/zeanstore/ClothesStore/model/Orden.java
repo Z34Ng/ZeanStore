@@ -26,7 +26,7 @@ public class Orden implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int  id;
-    private String number;
+    private String number; //codigo de orden
     private LocalDate createDate;
     private LocalDate reciedDate;
     private double amount;

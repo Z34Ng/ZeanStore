@@ -8,6 +8,8 @@ import com.ecommerce.zeanstore.ClothesStore.model.DetalleOrden;
 import com.ecommerce.zeanstore.ClothesStore.model.Orden;
 import com.ecommerce.zeanstore.ClothesStore.model.Producto;
 import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
+import com.ecommerce.zeanstore.ClothesStore.service.IDetalleOrdenService;
+import com.ecommerce.zeanstore.ClothesStore.service.IOrdenService;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.ecommerce.zeanstore.ClothesStore.service.IProductoService;
 import com.ecommerce.zeanstore.ClothesStore.service.IUsuarioService;
+import java.time.LocalDate;
 
 /**
  *
@@ -34,6 +37,12 @@ public class HomeController {
     
     @Autowired
     private IProductoService productoService;
+    
+    @Autowired
+    private IOrdenService ordenService;
+    
+    @Autowired
+    private IDetalleOrdenService detalleOrdenService;
     
     @Autowired
     private IUsuarioService usuarioService;
@@ -118,7 +127,7 @@ public class HomeController {
     
     @GetMapping("/order")
     public String getOrder(Model model){
-        Usuario usuario=usuarioService.findById(1).get();
+        Usuario usuario=usuarioService.findById(1).get();//id de la base de datos
         
         model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
         model.addAttribute("orden",orden);
@@ -127,5 +136,28 @@ public class HomeController {
         return "usuario/resumenorden";
     }
     
+    @GetMapping("/saveorder")
+    public String saveOrder(){
+        orden.setNumber(ordenService.getNumeroOrden());
+        orden.setCreateDate(LocalDate.now()); //obtiene la fecha del sistema
+        //orden.setReciedDate(LocalDate.MIN);
+        orden.setUser(usuarioService.findById(2).get());//id de la base de datos        
+        ordenService.save(orden);
+        guardarDetalleOrden();
+        vaciarOrdenYDetalles();
+                
+        return "redirect:/";
+    }
     
+    private void guardarDetalleOrden(){
+        for(DetalleOrden detalle:detallesOrden){
+            detalle.setOrden(orden);
+            detalleOrdenService.save(detalle);
+        }            
+    }
+    
+   private void vaciarOrdenYDetalles(){
+       orden=new Orden();
+       detallesOrden.clear();
+   }
 }

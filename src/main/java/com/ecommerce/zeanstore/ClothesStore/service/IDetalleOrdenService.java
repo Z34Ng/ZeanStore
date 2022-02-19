@@ -11,7 +11,6 @@ import com.ecommerce.zeanstore.ClothesStore.model.DetalleOrden;
  * @author ZEAN
  */
 
-
 public interface IDetalleOrdenService {
     DetalleOrden save (DetalleOrden detalleOrden);
 }
