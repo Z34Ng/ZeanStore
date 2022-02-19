@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @author ZEAN
  */
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto,Integer >{
+public interface IProductoRepository extends JpaRepository<Producto,Integer >{
     
 }

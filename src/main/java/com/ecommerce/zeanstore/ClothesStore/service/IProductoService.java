@@ -12,7 +12,7 @@ import java.util.Optional;
  *
  * @author ZEAN
  */
-public interface ProductoService {
+public interface IProductoService {
     public Producto save(Producto producto);
     public Optional<Producto> get(Integer  id);  //Optional pq puede existir o no
     public void update(Producto producto);

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Data;
 
 /**
  *
@@ -20,31 +21,25 @@ import javax.persistence.Table;
  */
 
 @Entity
+@Data
 @Table(name="usuario")
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
-    private int id;
-    
+    private int id;    
     //@Column(name="name")
-    private String name;
-    
+    private String name;    
     //@Column(name="username")
-    private String username;
-    
+    private String username;    
     //@Column(name="email")
-    private String email;
-    
+    private String email;    
     //@Column(name="address")
-    private String address;
-    
+    private String address;    
     //@Column(name="phone")
-    private String phone;
-    
+    private String phone;    
     //@Column(name="tipo")
-    private String tipo;
-    
+    private String tipo;    
     //@Column(name="password")
     private String password;
     
@@ -53,23 +48,7 @@ public class Usuario implements Serializable {
     
     @OneToMany(mappedBy="user")
     private List<Orden> ordenes;
-
-    public List<Orden> getOrdenes() {
-        return ordenes;
-    }
-
-    public void setOrdenes(List<Orden> ordenes) {
-        this.ordenes = ordenes;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
-    }
-
+    
     public Usuario(int id, String name, String username, String email, String address, String phone, String tipo, String password) {
         this.id = id;
         this.name = name;
@@ -80,73 +59,7 @@ public class Usuario implements Serializable {
         this.tipo = tipo;
         this.password = password;
     }
-
-    public Usuario() {
+    
+    public Usuario(){        
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-            
-           
 }

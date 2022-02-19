@@ -7,7 +7,7 @@ package com.ecommerce.zeanstore.ClothesStore.controller;
 import com.ecommerce.zeanstore.ClothesStore.model.DetalleOrden;
 import com.ecommerce.zeanstore.ClothesStore.model.Orden;
 import com.ecommerce.zeanstore.ClothesStore.model.Producto;
-import com.ecommerce.zeanstore.ClothesStore.service.ProductoService;
+import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.ecommerce.zeanstore.ClothesStore.service.IProductoService;
+import com.ecommerce.zeanstore.ClothesStore.service.IUsuarioService;
 
 /**
  *
@@ -31,7 +33,10 @@ public class HomeController {
     private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
     
     @Autowired
-    private ProductoService productoService;
+    private IProductoService productoService;
+    
+    @Autowired
+    private IUsuarioService usuarioService;
     
     //alamacena los detalles de cada orden
     List<DetalleOrden> detallesOrden=new ArrayList<>();  
@@ -112,7 +117,15 @@ public class HomeController {
     }
     
     @GetMapping("/order")
-    public String getOrder(){
+    public String getOrder(Model model){
+        Usuario usuario=usuarioService.findById(1).get();
+        
+        model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
+        model.addAttribute("orden",orden);
+        model.addAttribute("usuario", usuario);
+        
         return "usuario/resumenorden";
     }
+    
+    
 }

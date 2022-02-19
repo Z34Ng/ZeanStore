@@ -5,21 +5,21 @@
 package com.ecommerce.zeanstore.ClothesStore.service;
 
 import com.ecommerce.zeanstore.ClothesStore.model.Producto;
-import com.ecommerce.zeanstore.ClothesStore.repository.ProductoRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.ecommerce.zeanstore.ClothesStore.repository.IProductoRepository;
 
 /**
  *
  * @author ZEAN
  */
 @Service //para inyectar al contraldor  los metodos
-public class ProductoServiceImpl implements ProductoService{
+public class ProductoServiceImpl implements IProductoService{
 
     @Autowired //inyecta a la clase este objeto
-    private ProductoRepository productoRepository;
+    private IProductoRepository productoRepository;
     
     @Override
     public Producto save(Producto producto){

@@ -6,7 +6,6 @@ package com.ecommerce.zeanstore.ClothesStore.controller;
 
 import com.ecommerce.zeanstore.ClothesStore.model.Producto;
 import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
-import com.ecommerce.zeanstore.ClothesStore.service.ProductoService;
 import com.ecommerce.zeanstore.ClothesStore.service.ManageFileService;
 import java.io.IOException;
 import java.util.Optional;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import com.ecommerce.zeanstore.ClothesStore.service.IProductoService;
 
 /**
  *
@@ -31,7 +31,7 @@ public class ProductoController {
     private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
 
     @Autowired
-    private ProductoService productoService;
+    private IProductoService productoService;
 
     @Autowired //inyecctión
     private ManageFileService upload; //servicio creado para subir imagen
