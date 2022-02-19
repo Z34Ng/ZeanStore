@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ecommerce.zeanstore.ClothesStore.service.IProductoService;
 import com.ecommerce.zeanstore.ClothesStore.service.IUsuarioService;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -33,40 +34,41 @@ import java.time.LocalDate;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
     private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
-    
+
     @Autowired
     private IProductoService productoService;
-    
+
     @Autowired
     private IOrdenService ordenService;
-    
+
     @Autowired
     private IDetalleOrdenService detalleOrdenService;
-    
+
     @Autowired
     private IUsuarioService usuarioService;
-    
+
     //alamacena los detalles de cada orden
-    List<DetalleOrden> detallesOrden=new ArrayList<>();  
+    List<DetalleOrden> detallesOrden = new ArrayList<>();
     //datos de orden
     Orden orden = new Orden();
-    
+
     @GetMapping("")
-    public String home(Model model){      
-        model.addAttribute("productos",productoService.findAll());
+    public String home(Model model) {
+        model.addAttribute("productos", productoService.findAll());
         return "usuario/home";
     }
-    
+
     @GetMapping("productoHome/{id}")
-    public String productoHome(@PathVariable int id, Model model){
-        Producto producto=productoService.get(id).get();
-        model.addAttribute("producto",producto);
+    public String productoHome(@PathVariable int id, Model model) {
+        Producto producto = productoService.get(id).get();
+        model.addAttribute("producto", producto);
         return "usuario/productohome";
     }
-    
+
     @PostMapping("carrito")
-    public String añadirCarrito(@RequestParam int id, @RequestParam int cantidad, Model model){ 
+    public String añadirCarrito(@RequestParam int id, @RequestParam int cantidad, Model model) {
         //las anotaciones permiten obtener las datos enviados por formulario del productohome.html        
         Producto producto = productoService.get(id).get();
         DetalleOrden detalle = new DetalleOrden();
@@ -77,67 +79,70 @@ public class HomeController {
         detalle.setProducto(producto);
         detalle.setAmount(cantidad);
         detalle.setPrize(producto.getPrice());
-        detalle.setTotal(cantidad*producto.getPrice());
-        
+        detalle.setTotal(cantidad * producto.getPrice());
+
         //valida que el producto no se añada dos veces
-        int idProducto=producto.getId();
-        boolean ingresado=detallesOrden.stream().anyMatch(p -> p.getProducto().getId()==idProducto);        
-        if(!ingresado)
-            detallesOrden.add(detalle); 
-        
-        
-        sumaPrecio=detallesOrden.stream().mapToDouble(dt->dt.getTotal()).sum(); // streams java 8
+        int idProducto = producto.getId();
+        boolean ingresado = detallesOrden.stream().anyMatch(p -> p.getProducto().getId() == idProducto);
+        if (!ingresado) {
+            detallesOrden.add(detalle);
+        }
+
+        sumaPrecio = detallesOrden.stream().mapToDouble(dt -> dt.getTotal()).sum(); // streams java 8
         orden.setAmount(sumaPrecio);
-        
-        model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
-        model.addAttribute("orden",orden);
-        
+
+        model.addAttribute("detallesOrden", detallesOrden); //se manda para ver los datos en la vista
+        model.addAttribute("orden", orden);
+
         return "usuario/carrito";
-    }   
+    }
+
     /*
        (Se puede agregar un id global y asignarlo al detalle.id cuando se crea)
-    */
+     */
     @GetMapping("/quitarProducto/{id}") //retorna el id del producto, no del detalle
-    public String quitarProducto(@PathVariable int id, Model model){        
+    public String quitarProducto(@PathVariable int id, Model model) {
         //detallesOrden.removeIf(dt->dt.getName().equals(productoService.get(id).get().getName()));
-        List<DetalleOrden> newOrdenDetalle=new ArrayList<>();
-        
-        for(DetalleOrden detalle:detallesOrden)
-            if(detalle.getProducto().getId()!=id)
+        List<DetalleOrden> newOrdenDetalle = new ArrayList<>();
+
+        for (DetalleOrden detalle : detallesOrden) {
+            if (detalle.getProducto().getId() != id) {
                 newOrdenDetalle.add(detalle);
-        
-        detallesOrden=newOrdenDetalle; //cambia la lista 
-        
-        double sumaPrecio=detallesOrden.stream().mapToDouble(dt->dt.getTotal()).sum();
+            }
+        }
+
+        detallesOrden = newOrdenDetalle; //cambia la lista 
+
+        double sumaPrecio = detallesOrden.stream().mapToDouble(dt -> dt.getTotal()).sum();
         orden.setAmount(sumaPrecio);
-        
-        model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
-        model.addAttribute("orden",orden);
-        
+
+        model.addAttribute("detallesOrden", detallesOrden); //se manda para ver los datos en la vista
+        model.addAttribute("orden", orden);
+
         return "usuario/carrito";
     }
-    
+
     @GetMapping("/getCart")
-    public String getCart( Model model ){
-        model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
-        model.addAttribute("orden",orden);
-        
+    public String getCart(Model model) {
+        model.addAttribute("detallesOrden", detallesOrden); //se manda para ver los datos en la vista
+        model.addAttribute("orden", orden);
+
         return "usuario/carrito";
     }
-    
+
     @GetMapping("/order")
-    public String getOrder(Model model){
-        Usuario usuario=usuarioService.findById(1).get();//id de la base de datos
-        
-        model.addAttribute("detallesOrden",detallesOrden); //se manda para ver los datos en la vista
-        model.addAttribute("orden",orden);
+    public String getOrder(Model model) {
+        Usuario usuario = usuarioService.findById(1).get();//id de la base de datos
+
+        model.addAttribute("detallesOrden", detallesOrden); //se manda para ver los datos en la vista
+        model.addAttribute("orden", orden);
         model.addAttribute("usuario", usuario);
-        
+
         return "usuario/resumenorden";
     }
-    
+
     @GetMapping("/saveorder")
-    public String saveOrder(){
+    public String saveOrder() {
         orden.setNumber(ordenService.getNumeroOrden());
         orden.setCreateDate(LocalDate.now()); //obtiene la fecha del sistema
         //orden.setReciedDate(LocalDate.MIN);
@@ -145,19 +150,30 @@ public class HomeController {
         ordenService.save(orden);
         guardarDetalleOrden();
         vaciarOrdenYDetalles();
-                
+
         return "redirect:/";
     }
-    
-    private void guardarDetalleOrden(){
-        for(DetalleOrden detalle:detallesOrden){
+
+    private void guardarDetalleOrden() {
+        for (DetalleOrden detalle : detallesOrden) {
             detalle.setOrden(orden);
             detalleOrdenService.save(detalle);
-        }            
+        }
     }
-    
-   private void vaciarOrdenYDetalles(){
-       orden=new Orden();
-       detallesOrden.clear();
-   }
+
+    private void vaciarOrdenYDetalles() {
+        orden = new Orden();
+        detallesOrden.clear();
+    }
+
+    @PostMapping("/search")
+    public String search(@RequestParam String name,Model model) { //debe llamarse igual a la variable enviada por formulario
+        //LOGGER.info(name);    
+        List<Producto> matchProductos = productoService.findAll().stream()
+                                            .filter(p -> p.getName().contains(name))
+                                            .collect(Collectors.toList());
+        
+        model.addAttribute("productos",matchProductos); // el 1er arg debe ser productos porque asi lo leerá la vista
+        return "usuario/home";
+    }
 }

@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class DetalleOrden implements Serializable {
     private double prize; //precio unitarui
     private double total; //amount*prize
 
-    @OneToOne
+    @ManyToOne
     private Orden orden;
     
     @ManyToOne

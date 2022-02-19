@@ -6,11 +6,13 @@ package com.ecommerce.zeanstore.ClothesStore.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -34,8 +36,9 @@ public class Orden implements Serializable {
     @ManyToOne
     private Usuario user;
     
-    @OneToOne(mappedBy="orden")
-    private DetalleOrden detalle;
+    //@OneToOne(mappedBy="orden")
+    @OneToMany(mappedBy="orden")
+    private List<DetalleOrden> detalle;
     
     public Orden() {
     }
