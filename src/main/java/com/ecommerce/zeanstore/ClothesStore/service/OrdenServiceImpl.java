@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author ZEAN
  */
 @Service
-public class IOrdenServiceImpl implements IOrdenService{
+public class OrdenServiceImpl implements IOrdenService{
 
     @Autowired
     private IOrdenRepository ordenRepository;
