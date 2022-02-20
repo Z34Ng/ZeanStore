@@ -6,6 +6,8 @@ package com.ecommerce.zeanstore.ClothesStore.controller;
 
 import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
 import com.ecommerce.zeanstore.ClothesStore.service.IUsuarioService;
+import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,30 @@ public class UsuarioController {
         //LOGGER.info("Datos de Usuario: {}", usuario);
         usuario.setTipo("USER");
         usuarioService.save(usuario);
-        return "redirect:/usuario";
+        
+        return "redirect:/";
     }
     
+    @GetMapping("/login")
+    public String mostrarFormLogin(){
+        return "usuario/login";
+    }
+    
+    @PostMapping("/acceder")
+    public String acceder(Usuario usuario, HttpSession session){ //param session permite manejar el logueo
+        Optional<Usuario> user=usuarioService.findByEmail(usuario.getEmail());
+        //LOGGER.info(usuario1.get().getName());
+        
+        if(user.isPresent()){
+            session.setAttribute("idusuario", user.get().getId()); //la variable "idusuario" se puede usar
+            //en cualquier lado de la aplicación 
+            if(user.get().getTipo().equals("ADMIN"))
+                return "redirect:/administrador";
+            else
+                return "redirect:/";
+        }
+        else
+            LOGGER.info("Usuario no existe");
+        return "redirect:/";
+    }
 }

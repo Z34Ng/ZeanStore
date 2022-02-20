@@ -5,6 +5,7 @@
 package com.ecommerce.zeanstore.ClothesStore.repository;
 
 import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer>{
+    //Por defectto JPA obtiene un registro por id, pero se puede modificar
+    //obtiene un registro por email
+    Optional<Usuario> findByEmail(String email);        
     
 }

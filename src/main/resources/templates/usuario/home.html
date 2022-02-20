@@ -8,7 +8,11 @@
 
     <body>
         <!-- Navigation -->
-        <header th:include="usuario/template_user.html :: header"></header>
+        <!-- Si esta logueado -->
+        <header th:include="usuario/template_user.html :: header" th:if="${session==null}"></header>
+        <!-- Si NO esta logueado -->
+        <header th:include="usuario/template_user.html :: header-user" th:unless="${session==null}"></header>
+        
         <!-- Page Content -->
         <div class="container">
             <!-- Jumbotron Header -->
@@ -33,6 +37,6 @@
             <!-- /.row -->
 
         </div>
-        <footer th:replace="usuario/template_user.html"></footer>
+        <footer th:replace="usuario/template_user.html :: footer"></footer>
     </body>
 </html>

@@ -26,6 +26,7 @@ import com.ecommerce.zeanstore.ClothesStore.service.IProductoService;
 import com.ecommerce.zeanstore.ClothesStore.service.IUsuarioService;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -55,8 +56,10 @@ public class HomeController {
     Orden orden = new Orden();
 
     @GetMapping("")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+        LOGGER.info("Nombre de Sesión del usuario: {}",session.getAttribute("idusuario"));
         model.addAttribute("productos", productoService.findAll());
+        model.addAttribute("session",session.getAttribute("idusuario"));
         return "usuario/home";
     }
 
@@ -123,16 +126,21 @@ public class HomeController {
     }
 
     @GetMapping("/getCart")
-    public String getCart(Model model) {
+    public String getCart(Model model, HttpSession session) {
         model.addAttribute("detallesOrden", detallesOrden); //se manda para ver los datos en la vista
         model.addAttribute("orden", orden);
 
+        model.addAttribute("session", session.getAttribute("idusuario"));
         return "usuario/carrito";
     }
 
     @GetMapping("/order")
-    public String getOrder(Model model) {
-        Usuario usuario = usuarioService.findById(1).get();//id de la base de datos
+    public String getOrder(Model model, HttpSession session) {
+        
+        Usuario usuario = usuarioService.findById(Integer
+                                        .parseInt(session.getAttribute("idusuario")
+                                        .toString()))
+                                        .get();//id de la base de datos
 
         model.addAttribute("detallesOrden", detallesOrden); //se manda para ver los datos en la vista
         model.addAttribute("orden", orden);
@@ -142,11 +150,14 @@ public class HomeController {
     }
 
     @GetMapping("/saveorder")
-    public String saveOrder() {
+    public String saveOrder(HttpSession session) {
         orden.setNumber(ordenService.getNumeroOrden());
         orden.setCreateDate(LocalDate.now()); //obtiene la fecha del sistema
         //orden.setReciedDate(LocalDate.MIN);
-        orden.setUser(usuarioService.findById(2).get());//id de la base de datos        
+        orden.setUser(usuarioService.findById(Integer
+                                        .parseInt(session.getAttribute("idusuario")
+                                        .toString()))
+                                        .get());//id de la base de datos        
         ordenService.save(orden);
         guardarDetalleOrden();
         vaciarOrdenYDetalles();

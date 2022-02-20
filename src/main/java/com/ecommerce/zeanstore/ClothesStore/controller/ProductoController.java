@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.ecommerce.zeanstore.ClothesStore.service.IProductoService;
+import com.ecommerce.zeanstore.ClothesStore.service.IUsuarioService;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,6 +38,9 @@ public class ProductoController {
     @Autowired //inyecctión
     private ManageFileService upload; //servicio creado para subir imagen
 
+    @Autowired
+    private IUsuarioService usuarioService;
+    
     @GetMapping("/showAll")
     public String showAll(Model model) {
         model.addAttribute("productosTotal", productoService.findAll());
@@ -48,13 +53,19 @@ public class ProductoController {
     }
 
     @PostMapping("/save")
-    public String saveProduct(Producto producto, @RequestParam("img") MultipartFile file) throws IOException { //obtiene el param del atributo img de la vista
-        //LOGGER.info("Prueba con logger si guarda esta webaad: {}",producto.toString());        
-        producto.setUser(new Usuario(1, "", "", "", "", "", "", ""));
+    public String saveProduct(Producto producto, @RequestParam("img") MultipartFile file, 
+                              HttpSession session) throws IOException { //obtiene el param del atributo img de la vista
+        
+        //LOGGER.info("Prueba con logger si guarda esta webaad: {}",producto.toString());                                
+        producto.setUser(usuarioService.findById(Integer
+                                        .parseInt(session.getAttribute("idusuario")
+                                        .toString()))
+                                        .get());
         //imagen
         if (producto.getId() == null) //cuando se crea un producto                    
             producto.setPicture(upload.saveImage(file));        
-
+        LOGGER.info(producto.getPicture());
+        
         productoService.save(producto);
         return "redirect:/productos/showAll";
     }
