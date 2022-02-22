@@ -59,7 +59,8 @@ public class HomeController {
     public String home(Model model, HttpSession session) {
         LOGGER.info("Nombre de Sesión del usuario: {}",session.getAttribute("idusuario"));
         model.addAttribute("productos", productoService.findAll());
-        model.addAttribute("session",session.getAttribute("idusuario"));
+        model.addAttribute("sesion",session.getAttribute("idusuario"));
+            
         return "usuario/home";
     }
 
@@ -187,4 +188,6 @@ public class HomeController {
         model.addAttribute("productos",matchProductos); // el 1er arg debe ser productos porque asi lo leerá la vista
         return "usuario/home";
     }
+    
+
 }

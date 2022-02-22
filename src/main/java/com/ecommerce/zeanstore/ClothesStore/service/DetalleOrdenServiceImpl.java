@@ -5,7 +5,10 @@
 package com.ecommerce.zeanstore.ClothesStore.service;
 
 import com.ecommerce.zeanstore.ClothesStore.model.DetalleOrden;
+import com.ecommerce.zeanstore.ClothesStore.model.Orden;
 import com.ecommerce.zeanstore.ClothesStore.repository.IDetalleOrdenRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +26,5 @@ public class DetalleOrdenServiceImpl implements IDetalleOrdenService{
     public DetalleOrden save(DetalleOrden detalleOrden) {
         return detalleOrdenRepository.save(detalleOrden);
     }    
-    
+
 }

@@ -5,9 +5,11 @@
 package com.ecommerce.zeanstore.ClothesStore.service;
 
 import com.ecommerce.zeanstore.ClothesStore.model.Orden;
+import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
 import com.ecommerce.zeanstore.ClothesStore.repository.IOrdenRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +59,15 @@ public class OrdenServiceImpl implements IOrdenService{
             numeroOrden="0"+numeroOrden;
         
         return numeroOrden;
+    }
+
+    @Override
+    public List<Orden> findByUser(Usuario usuario) {
+        return ordenRepository.findByUser(usuario);
+    }
+
+    @Override
+    public Optional<Orden> findById(Integer id) {
+        return ordenRepository.findById(id);
     }
 }

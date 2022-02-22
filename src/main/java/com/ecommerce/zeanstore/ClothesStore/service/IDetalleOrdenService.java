@@ -5,6 +5,8 @@
 package com.ecommerce.zeanstore.ClothesStore.service;
 
 import com.ecommerce.zeanstore.ClothesStore.model.DetalleOrden;
+import com.ecommerce.zeanstore.ClothesStore.model.Orden;
+import java.util.List;
 
 /**
  *
@@ -12,5 +14,5 @@ import com.ecommerce.zeanstore.ClothesStore.model.DetalleOrden;
  */
 
 public interface IDetalleOrdenService {
-    DetalleOrden save (DetalleOrden detalleOrden);
+    DetalleOrden save (DetalleOrden detalleOrden);    
 }

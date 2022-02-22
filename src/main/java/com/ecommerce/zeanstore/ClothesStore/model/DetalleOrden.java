@@ -26,7 +26,7 @@ public class DetalleOrden implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String name; 
     private double amount; //cantidad selecionada
     private double prize; //precio unitarui
     private double total; //amount*prize

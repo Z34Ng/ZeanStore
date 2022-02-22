@@ -38,7 +38,7 @@ public class Orden implements Serializable {
     
     //@OneToOne(mappedBy="orden")
     @OneToMany(mappedBy="orden")
-    private List<DetalleOrden> detalle;
+    private List<DetalleOrden> detalles;
     
     public Orden() {
     }

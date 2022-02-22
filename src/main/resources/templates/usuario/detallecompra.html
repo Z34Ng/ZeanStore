@@ -5,55 +5,46 @@
     <head th:replace="usuario/template_user.html :: head">
         <title>Inicio</title>
     </head>
-
     <body>
-        
+        <!-- Navigation -->
         <header th:include="usuario/template_user.html :: header" th:if="${session==null}"></header>
         <!-- Si NO esta logueado -->
-        <header th:include="usuario/template_user.html :: header-user" th:unless="${session==null}"></header>
-        
+        <header th:include="usuario/template_user.html :: header-user" th:unless="${session==null}"></header>                
         <!-- Page Content -->
         <div class="container">
             <!-- Page Heading/Breadcrumbs -->
             <h1 class="mt-4 mb-3">
-                Zean eCommerce <small>Carrito</small>
+                Zean eCommerce <small>Detalles</small>
             </h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-                <li class="breadcrumb-item active">Carrito</li>
+                <li class="breadcrumb-item"><a th:href="@{/usuario/getPurchases}">Compras</a></li>
+                <li class="breadcrumb-item active">Detalle de Compra</li>
             </ol>
+
             <!-- Blog Post -->
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-9">
+                        <div class="col-lg-12">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Producto</th>
-                                        <th scope="col">Precio</th>
                                         <th scope="col">Cantidad</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Acción</th>
+                                        <th scope="col">Producto</th>                  
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Total</th>                  
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="detalle:${detallesOrden}">                                        
+                                    <tr th:each="detalle : ${detallesOrden}">
+                                        <td th:text="${detalle.amount}"></td>
                                         <td th:text="${detalle.name}"></td>
                                         <td th:text="${detalle.prize}"></td>
-                                        <td th:text="${detalle.amount}"></td>
                                         <td th:text="${detalle.total}"></td>
-                                        <td><a th:href="@{/quitarProducto/{id} (id=${detalle.producto.id})}" class="btn btn-danger">Quitar</a></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="col-lg-3">
-                            <h2 class="card-title">SUBTOTAL</h2>
-                            <ul class="list-group">
-                                <li class="list-group-item"> <h5 th:text="'Total: S/.'+${orden.amount}">Total: $ 10</h5> </li>
-                                <a th:href="@{/order}" class="btn btn-dark">Ver Orden</a>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -62,5 +53,4 @@
         <!-- /.container -->
         <footer th:replace="usuario/template_user.html :: footer"></footer>
     </body>
-
 </html>
