@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="administrador/template_admin.html :: head">
+        <title>Inicio</title>
+    </head>
+    <body>
+        <header th:include="administrador/template_admin.html :: header"></header>   
+        <!-- Page Content -->
+        <div class="container">
+            <!-- Page Heading/Breadcrumbs -->
+            <h1 class="mt-4 mb-3">
+                Zean eCommerce <small>Detalles</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/}">Compras</a></li>
+                <li class="breadcrumb-item active">Detalle de Compra</li>
+            </ol>
+
+            <!-- Blog Post -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Producto</th>                  
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Total</th>                  
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="detalle : ${detallesOrden}">
+                                        <td th:text="${detalle.amount}"></td>
+                                        <td th:text="${detalle.name}"></td>
+                                        <td th:text="${detalle.prize}"></td>
+                                        <td th:text="${detalle.total}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="administrador/template_admin.html :: footer"></footer>
+    </body>
+
+</html>
+

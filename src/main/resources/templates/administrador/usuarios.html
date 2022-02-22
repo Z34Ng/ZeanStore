@@ -7,9 +7,8 @@
     </head>
 
     <body>
-        <header th:include="usuario/template_user.html :: header" th:if="${session==null}"></header>
+        <header th:include="administrador/template_admin.html :: header"></header>
         <!-- Si NO esta logueado -->
-        <header th:include="usuario/template_user.html :: header-user" th:unless="${session==null}"></header>
 
         <!-- Page Content -->
         <div class="container">
