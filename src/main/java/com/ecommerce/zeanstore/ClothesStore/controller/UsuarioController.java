@@ -98,4 +98,11 @@ public class UsuarioController {
         model.addAttribute("detallesOrden", orden.get().getDetalles());
         return "usuario/detallecompra";
     }
+    
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("idusuario");//remueve la sesión al usuario
+        
+        return "redirect:/";
+    }
 }

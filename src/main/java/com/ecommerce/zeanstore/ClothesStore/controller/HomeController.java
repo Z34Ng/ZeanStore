@@ -57,7 +57,7 @@ public class HomeController {
 
     @GetMapping("")
     public String home(Model model, HttpSession session) {
-        LOGGER.info("Nombre de Sesión del usuario: {}",session.getAttribute("idusuario"));
+        //LOGGER.info("Nombre de Sesión del usuario: {}",session.getAttribute("idusuario"));
         model.addAttribute("productos", productoService.findAll());
         model.addAttribute("sesion",session.getAttribute("idusuario"));
             
