@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="administrador/template_admin.html :: head">
+        <title>Inicio</title>
+    </head>
+
+    <body>
+        <header th:include="usuario/template_user.html :: header" th:if="${session==null}"></header>
+        <!-- Si NO esta logueado -->
+        <header th:include="usuario/template_user.html :: header-user" th:unless="${session==null}"></header>
+
+        <!-- Page Content -->
+        <div class="container">
+            <!-- Page Heading/Breadcrumbs -->
+            <h1 class="mt-4 mb-3">
+                Zean eCommerce <small>Productos</small>
+            </h1>
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item active">Ver Usuarios</li>
+            </ol>
+            <h2>Usuarios</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Teléfono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario:${usuarios}">
+                        <td th:text="${usuario.name}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <td th:text="${usuario.address}"></td>
+                        <td th:text="${usuario.phone}"></td>
+                    </tr>       
+                </tbody>
+            </table>
+
+        </div>
+        <footer th:replace="administrador/template_admin.html :: footer"></footer>
+    </body>
+
+</html>
