@@ -4,19 +4,17 @@
  */
 package com.ecommerce.zeanstore.ClothesStore.controller;
 
-import com.ecommerce.zeanstore.ClothesStore.model.DetalleOrden;
 import com.ecommerce.zeanstore.ClothesStore.model.Orden;
 import com.ecommerce.zeanstore.ClothesStore.model.Usuario;
-import com.ecommerce.zeanstore.ClothesStore.service.IDetalleOrdenService;
 import com.ecommerce.zeanstore.ClothesStore.service.IOrdenService;
 import com.ecommerce.zeanstore.ClothesStore.service.IUsuarioService;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,10 +31,9 @@ public class UsuarioController {
     private  IUsuarioService usuarioService;
     
     @Autowired
-    private IOrdenService ordenService;
+    private IOrdenService ordenService;   
     
-    @Autowired
-    private IDetalleOrdenService detalleOrdenService;
+    BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
     
     @GetMapping("/registro")
     public String mostrarFormRegistro(){
@@ -47,8 +44,9 @@ public class UsuarioController {
     public String registrar(Usuario usuario ){
         //LOGGER.info("Datos de Usuario: {}", usuario);
         usuario.setTipo("USER");
-        usuarioService.save(usuario);
+        usuario.setPassword(passEncoder.encode(usuario.getPassword()));
         
+        usuarioService.save(usuario);        
         return "redirect:/";
     }
     

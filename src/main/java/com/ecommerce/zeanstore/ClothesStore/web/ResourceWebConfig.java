@@ -12,8 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * @author ZEAN
  */
-@Configuration //configuracion que permite apuntar desde cualquier lugar al path de imagenes
+@Configuration 
 //path relativos
+//configuracion que permite apuntar desde cualquier lugar al path de imagenes
 public class ResourceWebConfig implements WebMvcConfigurer{
 
     /**
@@ -24,7 +25,5 @@ public class ResourceWebConfig implements WebMvcConfigurer{
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**").addResourceLocations("file:images/"); //images/** direccion q obtendra todo lo que esta en la carpeta 
         //addresourcelocation indica a donde deberia aountar
-    }
-    
-    
+    }        
 }
