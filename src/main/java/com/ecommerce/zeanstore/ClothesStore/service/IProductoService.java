@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public interface IProductoService {
     public Producto save(Producto producto);
-    public Optional<Producto> get(Integer  id);  //Optional pq puede existir o no
+    public Optional<Producto> findProducto(Integer  id);  //Optional pq puede existir o no
     public void update(Producto producto);
     public void delete(Integer  id);
     public List<Producto> findAll();

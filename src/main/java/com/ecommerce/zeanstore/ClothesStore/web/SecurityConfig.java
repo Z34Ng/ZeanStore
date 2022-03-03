@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
  *
  * @author ZEAN
+ * gilson@gmail.com::1234
  */
 @Configuration 
 @EnableWebSecurity //"interceptor", restringe acceso a paginas de acuerdo al tipo de usuario
@@ -42,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .formLogin().loginPage("/usuario/login")
                 .permitAll().defaultSuccessUrl("/usuario/acceder"); //cuando es usuario USER se le permite siempre el resto
-    }   
+    }
         
     @Bean
     public BCryptPasswordEncoder getEncoder(){

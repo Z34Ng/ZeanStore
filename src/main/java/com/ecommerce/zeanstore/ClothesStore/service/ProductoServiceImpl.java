@@ -27,7 +27,7 @@ public class ProductoServiceImpl implements IProductoService{
     }
 
     @Override
-    public Optional<Producto> get(Integer id) {
+    public Optional<Producto> findProducto(Integer id) {
         return productoRepository.findById(id);        
     }
 

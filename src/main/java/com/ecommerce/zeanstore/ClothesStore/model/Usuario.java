@@ -29,17 +29,15 @@ public class Usuario implements Serializable {
     @Column(name="id")
     private int id;    
     //@Column(name="name")
-    private String name;    
-    //@Column(name="username")
-    private String username;    
+    private String name;     
     //@Column(name="email")
     private String email;    
     //@Column(name="address")
     private String address;    
     //@Column(name="phone")
     private String phone;    
-    //@Column(name="tipo")
-    private String tipo;    
+    //@Column(name="typeUser")
+    private String typeUser;    
     //@Column(name="password")
     private String password;
     
@@ -49,14 +47,13 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy="user")
     private List<Orden> ordenes;
     
-    public Usuario(int id, String name, String username, String email, String address, String phone, String tipo, String password) {
+    public Usuario(int id, String name, String email, String address, String phone, String typeUser, String password) {
         this.id = id;
-        this.name = name;
-        this.username = username;
+        this.name = name;        
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.tipo = tipo;
+        this.typeUser = typeUser;
         this.password = password;
     }
     

@@ -66,7 +66,7 @@ public class HomeController {
 
     @GetMapping("productoHome/{id}")
     public String productoHome(@PathVariable int id, Model model) {
-        Producto producto = productoService.get(id).get();
+        Producto producto = productoService.findProducto(id).get();
         model.addAttribute("producto", producto);
         return "usuario/productohome";
     }
@@ -74,7 +74,7 @@ public class HomeController {
     @PostMapping("carrito")
     public String añadirCarrito(@RequestParam int id, @RequestParam int cantidad, Model model) {
         //las anotaciones permiten obtener las datos enviados por formulario del productohome.html        
-        Producto producto = productoService.get(id).get();
+        Producto producto = productoService.findProducto(id).get();
         DetalleOrden detalle = new DetalleOrden();
         double sumaPrecio;
         //LOGGER.info("Producto añadido: {}",producto);
@@ -106,7 +106,7 @@ public class HomeController {
      */
     @GetMapping("/quitarProducto/{id}") //retorna el id del producto, no del detalle
     public String quitarProducto(@PathVariable int id, Model model) {
-        //detallesOrden.removeIf(dt->dt.getName().equals(productoService.get(id).get().getName()));
+        //detallesOrden.removeIf(dt->dt.getName().equals(productoService.findProducto(id).findProducto().getName()));
         List<DetalleOrden> newOrdenDetalle = new ArrayList<>();
 
         for (DetalleOrden detalle : detallesOrden) {

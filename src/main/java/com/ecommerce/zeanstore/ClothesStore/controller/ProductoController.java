@@ -72,7 +72,7 @@ public class ProductoController {
 
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable int id, Model model) { //la variable que pasa por url pasa como parametro del metodo         
-        Optional<Producto> optionalProducto = productoService.get(id);
+        Optional<Producto> optionalProducto = productoService.findProducto(id);
         Producto producto = optionalProducto.get();
         model.addAttribute("producto", producto);
         //LOGGER.info("Resultado del producto buscado: {}",producto.toString());
@@ -81,7 +81,7 @@ public class ProductoController {
 
     @PostMapping("/update")
     public String updateProduct(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
-        Producto p = productoService.get(producto.getId()).get();
+        Producto p = productoService.findProducto(producto.getId()).get();
         
         if (file.isEmpty()) //editamos el producto pero no cambiamos la img            
             producto.setPicture(p.getPicture());
@@ -99,7 +99,7 @@ public class ProductoController {
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable int id) { //la variable que pasa por url pasa como parametro del metodo         
 
-        Producto p = productoService.get(id).get();
+        Producto p = productoService.findProducto(id).get();
         //elimina cuando no es la img por defecto
         if (!p.getPicture().equals("default.jpg"))
             upload.deleteImage(p.getPicture());

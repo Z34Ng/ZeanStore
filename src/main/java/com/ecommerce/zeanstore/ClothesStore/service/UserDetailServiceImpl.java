@@ -26,12 +26,12 @@ import org.springframework.stereotype.Service;
 public class UserDetailServiceImpl implements UserDetailsService{
 
     @Autowired
-    private IUsuarioService usuarioService;
-    
+    private IUsuarioService usuarioService;    
+    /*
     @Lazy
     @Autowired  
     private BCryptPasswordEncoder bCrypt;//permite encriptar y desencriptar password
-    
+    */
     @Autowired
     HttpSession session; //guarda sesion del usuario logueado
     
@@ -50,8 +50,9 @@ public class UserDetailServiceImpl implements UserDetailsService{
             //El password estara encriptado y realizara match
             return User.builder()
                     .username(usuario.getName())
-                    .password(bCrypt.encode(usuario.getPassword()))
-                    .roles(usuario.getTipo())
+                    //.password(bCrypt.encode(usuario.getPassword()))
+                    .password(usuario.getPassword())
+                    .roles(usuario.getTypeUser())
                     .build(); //construye objeto UserDetails
         }
         else{

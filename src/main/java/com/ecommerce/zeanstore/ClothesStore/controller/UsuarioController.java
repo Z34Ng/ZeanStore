@@ -43,7 +43,7 @@ public class UsuarioController {
     @PostMapping("/saveUser")
     public String registrar(Usuario usuario ){
         //LOGGER.info("Datos de Usuario: {}", usuario);
-        usuario.setTipo("USER");
+        usuario.setTypeUser("USER");
         usuario.setPassword(passEncoder.encode(usuario.getPassword()));
         
         usuarioService.save(usuario);        
@@ -55,15 +55,17 @@ public class UsuarioController {
         return "usuario/login";
     }
     
-    @PostMapping("/acceder")
+    @GetMapping("/acceder")
     public String acceder(Usuario usuario, HttpSession session){ //param session permite manejar el logueo
-        Optional<Usuario> user=usuarioService.findByEmail(usuario.getEmail());
+        //Optional<Usuario> user=usuarioService.findByEmail(usuario.getEmail());
         //LOGGER.info(usuario1.get().getName());
-        
+        Optional<Usuario> user=usuarioService.findById(Integer.parseInt(
+                                    session.getAttribute("idusuario")
+                                            .toString()));  
         if(user.isPresent()){
             session.setAttribute("idusuario", user.get().getId()); //la variable "idusuario" se puede usar
             //en cualquier lado de la aplicación 
-            if(user.get().getTipo().equals("ADMIN"))
+            if(user.get().getTypeUser().equals("ADMIN"))
                 return "redirect:/administrador";
             else
                 return "redirect:/";
