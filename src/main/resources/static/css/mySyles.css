@@ -1,9 +1,0 @@
-.myProd{	
-	float: left;
-	/*border: 1px solid #FF0000;*/
-	-moz-transition:-moz-transform 0.05s ease-in-out 0.05s;	
-}
-.myProd:hover{
-	-moz-transform: scale(1.05);
-	box-shadow: 2px 5px 12px;
-}
