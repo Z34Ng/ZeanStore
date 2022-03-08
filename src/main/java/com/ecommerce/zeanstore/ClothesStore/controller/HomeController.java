@@ -182,7 +182,8 @@ public class HomeController {
     public String search(@RequestParam String name,Model model) { //debe llamarse igual a la variable enviada por formulario
         //LOGGER.info(name);    
         List<Producto> matchProductos = productoService.findAll().stream()
-                                            .filter(p -> p.getName().contains(name))
+                                            .filter(p -> p.getName().toLowerCase().
+                                                    contains(name.toLowerCase()))
                                             .collect(Collectors.toList());
         
         model.addAttribute("productos",matchProductos); // el 1er arg debe ser productos porque asi lo leerá la vista
