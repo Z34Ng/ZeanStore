@@ -60,7 +60,7 @@ public class ProductoController {
                                         .parseInt(session.getAttribute("idusuario")
                                         .toString()))
                                         .get());
-      
+        
         productoService.save(producto);
         return "redirect:/productos/showAll";
     }
