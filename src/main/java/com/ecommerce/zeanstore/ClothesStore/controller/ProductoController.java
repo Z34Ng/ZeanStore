@@ -61,6 +61,7 @@ public class ProductoController {
                                         .parseInt(session.getAttribute("idusuario")
                                         .toString()))
                                         .get());
+        
         //imagen
         if (producto.getId() == null) //cuando se crea un producto                    
             producto.setPicture(upload.saveImage(file));        
