@@ -53,8 +53,7 @@ public class ProductoController {
     }
 
     @PostMapping("/save")
-    public String saveProduct(Producto producto, @RequestParam("img") MultipartFile file, 
-                              HttpSession session) throws IOException { //obtiene el param del atributo img de la vista
+    public String saveProduct(Producto producto, HttpSession session) throws IOException { //obtiene el param del atributo img de la vista
         
         //LOGGER.info("Prueba con logger si guarda esta webaad: {}",producto.toString());                                
         producto.setUser(usuarioService.findById(Integer
@@ -76,7 +75,7 @@ public class ProductoController {
     }
 
     @PostMapping("/update")
-    public String updateProduct(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
+    public String updateProduct(Producto producto) throws IOException {
         Producto p = productoService.findProducto(producto.getId()).get();      
         producto.setUser(p.getUser());
         productoService.update(producto);
